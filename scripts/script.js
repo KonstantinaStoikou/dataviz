@@ -4,6 +4,10 @@ data = {
   Pacific: { sustainable: 52, overexploited: 48 },
 };
 
+d3.csv("../data/fish_stocks_within_sustainable_levels.csv", function (d) {
+  console.log(d);
+});
+
 var gaugeOptions = {
   chart: {
     type: "solidgauge",

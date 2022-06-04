@@ -1,3 +1,5 @@
+PUBLIC_URL = "https://konstantinastoikou.github.io/dataviz/";
+
 d3.csv(
   // "https://raw.githubusercontent.com/KonstantinaStoikou/dataviz/main/data/fish-stocks-within-sustainable-levels.csv?token=GHSAT0AAAAAABOUNHA6GE7YSMTJRUY5QGUIYU2Q6PQ",
   "https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-10-12/fish-stocks-within-sustainable-levels.csv",
@@ -150,7 +152,7 @@ d3.csv(
 
       const img = document.querySelector("#map-img");
 
-      img.src = "images/" + activities.value + ".jpg";
+      img.src = PUBLIC_URL + "images/" + activities.value + ".jpg";
     });
   }
 );

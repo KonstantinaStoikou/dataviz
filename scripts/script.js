@@ -1,14 +1,8 @@
-data = {
-  Atlantic: { sustainable: 15, overexploited: 85 },
-  Mediterranean: { sustainable: 23, overexploited: 77 },
-  Pacific: { sustainable: 52, overexploited: 48 },
-};
-
-// process data
 d3.csv(
   // "https://raw.githubusercontent.com/KonstantinaStoikou/dataviz/main/data/fish-stocks-within-sustainable-levels.csv?token=GHSAT0AAAAAABOUNHA6GE7YSMTJRUY5QGUIYU2Q6PQ",
   "https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-10-12/fish-stocks-within-sustainable-levels.csv",
   function (d) {
+    // process data
     return {
       location: d.Entity,
       year: d.Year,
@@ -20,8 +14,7 @@ d3.csv(
       ),
     };
   },
-  function (data1) {
-    console.log("D", data1);
+  function (data) {
     var gaugeOptions = {
       chart: {
         type: "solidgauge",
@@ -102,13 +95,20 @@ d3.csv(
             name: "Speed",
             data: [
               {
-                y: data.Atlantic.overexploited,
-                sust: data.Atlantic.sustainable,
+                y: data.filter(
+                  (x) =>
+                    x.location === "Northeast Central Atlantic" &&
+                    x.year === "2015"
+                )[0].overexploited,
+                sust: data.filter(
+                  (x) =>
+                    x.location === "Northeast Central Atlantic" &&
+                    x.year === "2015"
+                )[0].sustainable,
               },
             ],
             dataLabels: {
               formatter: function () {
-                console.log(this);
                 return (
                   '<div style="text-align:center">' +
                   '<span style="font-size:25px">' +
@@ -136,11 +136,7 @@ d3.csv(
 
       if (chartSpeed) {
         point = chartSpeed.series[0].points[0];
-        // newVal = {
-        //   y: data[activities.value].overexploited,
-        //   sust: data[activities.value].sustainable,
-        // };
-        datum = data1.filter(
+        datum = data.filter(
           (x) => x.location === activities.value && x.year === "2015"
         )[0];
         console.log(datum);
@@ -151,6 +147,10 @@ d3.csv(
 
         point.update(newVal);
       }
+
+      const img = document.querySelector("#map-img");
+
+      img.src = "images/" + activities.value + ".png";
     });
   }
 );

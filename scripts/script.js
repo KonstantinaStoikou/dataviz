@@ -150,7 +150,7 @@ d3.csv(
 
       const img = document.querySelector("#map-img");
 
-      img.src = "images/" + activities.value + ".png";
+      img.src = "images/" + activities.value + ".jpg";
     });
   }
 );

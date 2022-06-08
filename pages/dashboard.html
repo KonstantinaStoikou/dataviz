@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html class="h-100">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Website for data visualization course iin DSIT master's."
+    />
+    <meta
+      name="author"
+      content="Maria Kostopoulou, George Messinios, Konstantina Stoikou, Anastasia Tapari"
+    />
+    <title>Overfishing - Dashboard</title>
+    <link rel="icon" href="../images/favicon.svg" />
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+
+    <link rel="stylesheet" href="../styles/variables.css" />
+    <link rel="stylesheet" href="../styles/navbar.css" />
+    <link rel="stylesheet" href="../styles/dashboard.css" />
+    <link rel="stylesheet" href="../styles/gauge.css" />
+
+    <script src="https://d3js.org/d3.v4.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://d3js.org/d3.v4.js"></script>
+    <script src="../scripts/gauge.js" defer></script>
+  </head>
+
+  <body class="d-flex h-100">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+      <header class="mb">
+        <nav
+          class="navbar navbar-expand-lg navbar-light fixed-top"
+          aria-label="navbar"
+        >
+          <div class="container-fluid">
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbar"
+              aria-controls="navbar"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div
+              class="collapse navbar-collapse justify-content-md-center"
+              id="navbar"
+            >
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a
+                    class="nav-link fw-bold"
+                    aria-current="page"
+                    href="../index.html"
+                    >Home</a
+                  >
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link fw-bold active" href="dashboard.html"
+                    >Dashboard</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link fw-bold" href="presentation.html"
+                    >Presentation</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link fw-bold" href="credits.html">Credits</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </header>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-2">
+            <ul class="list-group d-inline-flex">
+              <a
+                class="list-group-item list-group-item-action active"
+                href="https://getbootstrap.com/"
+                >Page 1</a
+              >
+              <a
+                class="list-group-item list-group-item-action"
+                href="https://getbootstrap.com/"
+                >Page 2</a
+              >
+              <a
+                class="list-group-item list-group-item-action"
+                href="https://getbootstrap.com/"
+                >Page 3</a
+              >
+            </ul>
+          </div>
+          <div class="col">
+            <div class="p-5 mb-4 bg-light rounded-3" id="container">
+              <div class="container-fluid py-5">
+                <h1 class="display-5 fw-bold">Custom jumbotron</h1>
+                <figure class="highcharts-figure">
+                  <div id="container-speed" class="chart-container"></div>
+                  <div id="container-rpm" class="chart-container"></div>
+                  <label for="region">Choose a fishing area:</label>
+
+                  <select name="region" id="region">
+                    <option value="Northeast Central Atlantic">
+                      Northeast Central Atlantic
+                    </option>
+                    <option value="Eastern Central Pacific">
+                      Eastern Central Pacific
+                    </option>
+                    <option value="Mediterranean and Black Sea">
+                      Mediterranean and Black Sea
+                    </option>
+                  </select>
+                  <img
+                    id="map-img"
+                    src="../images/fishing_areas/Northeast Central Atlantic.jpg"
+                    alt="Girl in a jacket"
+                  />
+                </figure>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="mt-auto text-center text-black-50">
+        <p>Data Visualization 2022 - DSIT</p>
+      </footer>
+    </div>
+  </body>
+</html>

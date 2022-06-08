@@ -152,7 +152,8 @@ d3.csv(
 
       const img = document.querySelector("#map-img");
 
-      img.src = PUBLIC_URL + "images/" + activities.value + ".jpg";
+      img.src = "../images/fishing_areas/" + activities.value + ".jpg";
+      // PUBLIC_URL + "images/fishing_areas/" + activities.value + ".jpg";
     });
   }
 );

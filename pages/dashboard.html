@@ -28,6 +28,15 @@
     <link rel="stylesheet" href="../styles/dashboard.css" />
     <link rel="stylesheet" href="../styles/overexploited-chart.css" />
 
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
     <!-- D3.js -->
     <script src="https://d3js.org/d3.v4.js"></script>
 
@@ -47,6 +56,7 @@
 
     <!-- Custom scripts -->
     <script src="../scripts/overexploited-chart.js" defer></script>
+    <script src="../scripts/sector-chart.js" defer></script>
     <script src="../scripts/navbar.js" defer></script>
   </head>
 
@@ -172,6 +182,32 @@
                   src="../images/fishing_areas/World.jpg"
                   alt="Fishing area"
                 />
+              </figure>
+              <figure class="highcharts-figure">
+                <div id="container-sector"></div>
+                <div id="play-controls">
+                  <button
+                    id="play-pause-button"
+                    class="fa fa-play"
+                    title="play"
+                  ></button>
+                  <input
+                    id="play-range"
+                    type="range"
+                    value="1950"
+                    min="1950"
+                    max="2010"
+                    style="color: white"
+                  />
+                  <output id="play-output" for="play-range" name="year"
+                    >1950</output
+                  >
+                </div>
+
+                <!-- <select name="year" id="year">
+                  <option value="1950">1950</option>
+                  <option value="1951">1951</option>
+                </select> -->
               </figure>
             </div>
           </div>

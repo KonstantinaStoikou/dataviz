@@ -22,20 +22,32 @@
       crossorigin="anonymous"
     />
 
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="../styles/variables.css" />
     <link rel="stylesheet" href="../styles/navbar.css" />
     <link rel="stylesheet" href="../styles/dashboard.css" />
-    <link rel="stylesheet" href="../styles/gauge.css" />
+    <link rel="stylesheet" href="../styles/overexploited-chart.css" />
 
+    <!-- D3.js -->
     <script src="https://d3js.org/d3.v4.js"></script>
+
+    <!-- HighCharts -->
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/highcharts-more.js"></script>
     <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    <script src="https://code.highcharts.com/modules/export-data.js"></script>
-    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <script src="https://d3js.org/d3.v4.js"></script>
-    <script src="../scripts/gauge.js" defer></script>
+
+    <!-- JQuery -->
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Custom scripts -->
+    <script src="../scripts/overexploited-chart.js" defer></script>
+    <script src="../scripts/navbar.js" defer></script>
   </head>
 
   <body class="d-flex h-100">
@@ -112,32 +124,55 @@
             </ul>
           </div>
           <div class="col">
-            <div class="p-5 mb-4 bg-light rounded-3" id="container">
-              <div class="container-fluid py-5">
-                <h1 class="display-5 fw-bold">Custom jumbotron</h1>
-                <figure class="highcharts-figure">
-                  <div id="container-speed" class="chart-container"></div>
-                  <div id="container-rpm" class="chart-container"></div>
-                  <label for="region">Choose a fishing area:</label>
+            <div class="container">
+              <figure class="highcharts-figure">
+                <div id="container-overexploited" class="chart-container"></div>
 
-                  <select name="region" id="region">
-                    <option value="Northeast Central Atlantic">
-                      Northeast Central Atlantic
-                    </option>
-                    <option value="Eastern Central Pacific">
-                      Eastern Central Pacific
-                    </option>
-                    <option value="Mediterranean and Black Sea">
-                      Mediterranean and Black Sea
-                    </option>
-                  </select>
-                  <img
-                    id="map-img"
-                    src="../images/fishing_areas/Northeast Central Atlantic.jpg"
-                    alt="Girl in a jacket"
-                  />
-                </figure>
-              </div>
+                <label for="region">Choose a fishing area:</label>
+                <select name="region" id="region">
+                  <option value="World">World</option>
+                  <option value="Northeast Central Atlantic">
+                    Northeast Central Atlantic
+                  </option>
+                  <option value="Northwest Central Atlantic">
+                    Northwest Central Atlantic
+                  </option>
+                  <option value="Southeast Central Atlantic">
+                    Southeast Central Atlantic
+                  </option>
+                  <option value="Eastern Central Atlantic">
+                    Eastern Central Atlantic
+                  </option>
+                  <option value="Western Central Atlantic">
+                    Western Central Atlantic
+                  </option>
+                  <option value="Southwest Atlantic">Southwest Atlantic</option>
+                  <option value="Northeast Pacific">Northeast Pacific</option>
+                  <option value="Northwest Pacific">Northwest Pacific</option>
+                  <option value="Southeast Pacific">Southeast Pacific</option>
+                  <option value="Eastern Central Pacific">
+                    Eastern Central Pacific
+                  </option>
+                  <option value="Western Central Pacific">
+                    Western Central Pacific
+                  </option>
+                  <option value="Southwest Pacific">Southwest Pacific</option>
+                  <option value="Western Indian Ocean">
+                    Western Indian Ocean
+                  </option>
+                  <option value="Eastern Indian Ocean">
+                    Eastern Indian Ocean
+                  </option>
+                  <option value="Mediterranean and Black Sea">
+                    Mediterranean and Black Sea
+                  </option>
+                </select>
+                <img
+                  id="map-img"
+                  src="../images/fishing_areas/World.jpg"
+                  alt="Fishing area"
+                />
+              </figure>
             </div>
           </div>
         </div>

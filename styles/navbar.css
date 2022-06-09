@@ -1,22 +1,41 @@
 .nav-link, .nav-link:hover {
     text-decoration: none;
-  }
+}
   
-  .nav-item:after {
-    content: '';
-    display: block;
-    margin: auto;
-    height: 3px;
-    width: 0px;
-    background: transparent;
-    transition: width .5s ease, background-color .5s ease;
-  }
-  .nav-item:hover:after {
-    width: 60%;
-    background: var(--main);
-  }
-  
-  .active:after {
-    width: 60%;
-    background: var(--main);
-  }
+.nav-item:after {
+  content: '';
+  display: block;
+  margin: auto;
+  height: 3px;
+  width: 0px;
+  background: transparent;
+  transition: width .5s ease, background-color .5s ease;
+}
+.nav-item:hover:after {
+  width: 60%;
+  background: var(--main);
+}
+
+.active:after {
+  width: 60%;
+  background: var(--main);
+}
+
+.nav-link {
+  font-size: larger
+}
+
+/* .nav-link, .nav-link.active {
+  color: var(--main);
+}
+
+.active {
+  color: var(--main) !important;
+} */
+
+.mb { margin-bottom: 5em; }
+
+.bg-light {
+  transition: 0.3s;
+  box-shadow: 3px 3px 15px 1px #c4c3c3;
+}

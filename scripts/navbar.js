@@ -5,3 +5,19 @@ $(window).scroll(function () {
     $(".navbar").removeClass("bg-light");
   }
 });
+
+$("#collapse-button").on("click", function () {
+  if ($(".navbar").hasClass("bg-light")) {
+    $(".navbar").removeClass("bg-light");
+  } else {
+    $(".navbar").addClass("bg-light");
+  }
+});
+
+$("#collapse-button-home").on("click", function () {
+  if ($(".navbar").hasClass("bg-dark")) {
+    $(".navbar").removeClass("bg-dark");
+  } else {
+    $(".navbar").addClass("bg-dark");
+  }
+});

@@ -25,17 +25,10 @@
   font-size: larger
 }
 
-/* .nav-link, .nav-link.active {
-  color: var(--main);
-}
-
-.active {
-  color: var(--main) !important;
-} */
-
 .mb { margin-bottom: 5em; }
 
 .bg-light {
   transition: 0.3s;
   box-shadow: 3px 3px 15px 1px #c4c3c3;
+  background-color: white !important;
 }

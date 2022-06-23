@@ -3,57 +3,52 @@ d3.csv(
   function (d) {
     // process data
     return {
-      [d.Year]: {
-        location: d.Entity,
-        year: d.Year,
-        data: {
-          pelagic_fish: parseInt(
-            d[
-              "Commodity Balances - Livestock and Fish Primary Equivalent - Pelagic Fish - 2763 - Production - 5510 - tonnes"
-            ]
-          ),
-          crustaceans: parseInt(
-            d[
-              "Commodity Balances - Livestock and Fish Primary Equivalent - Crustaceans - 2765 - Production - 5510 - tonnes"
-            ]
-          ),
-          cephalopods: parseInt(
-            d[
-              "Commodity Balances - Livestock and Fish Primary Equivalent - Cephalopods - 2766 - Production - 5510 - tonnes"
-            ]
-          ),
-          demersal_fish: parseInt(
-            d[
-              "Commodity Balances - Livestock and Fish Primary Equivalent - Demersal Fish - 2762 - Production - 5510 - tonnes"
-            ]
-          ),
-
-          freshwater_fish: parseInt(
-            d[
-              "Commodity Balances - Livestock and Fish Primary Equivalent - Freshwater Fish - 2761 - Production - 5510 - tonnes"
-            ]
-          ),
-
-          molluscs_other: parseInt(
-            d[
-              "Commodity Balances - Livestock and Fish Primary Equivalent - Molluscs, Other - 2767 - Production - 5510 - tonnes"
-            ]
-          ),
-
-          marine_fish_other: parseInt(
-            d[
-              "Commodity Balances - Livestock and Fish Primary Equivalent - Marine Fish, Other - 2764 - Production - 5510 - tonnes"
-            ]
-          ),
-        },
-      },
+      location: d.Entity,
+      year: d.Year,
+      data: [
+        parseInt(
+          d[
+            "Commodity Balances - Livestock and Fish Primary Equivalent - Pelagic Fish - 2763 - Production - 5510 - tonnes"
+          ]
+        ),
+        parseInt(
+          d[
+            "Commodity Balances - Livestock and Fish Primary Equivalent - Crustaceans - 2765 - Production - 5510 - tonnes"
+          ]
+        ),
+        parseInt(
+          d[
+            "Commodity Balances - Livestock and Fish Primary Equivalent - Cephalopods - 2766 - Production - 5510 - tonnes"
+          ]
+        ),
+        parseInt(
+          d[
+            "Commodity Balances - Livestock and Fish Primary Equivalent - Demersal Fish - 2762 - Production - 5510 - tonnes"
+          ]
+        ),
+        parseInt(
+          d[
+            "Commodity Balances - Livestock and Fish Primary Equivalent - Freshwater Fish - 2761 - Production - 5510 - tonnes"
+          ]
+        ),
+        parseInt(
+          d[
+            "Commodity Balances - Livestock and Fish Primary Equivalent - Molluscs, Other - 2767 - Production - 5510 - tonnes"
+          ]
+        ),
+        parseInt(
+          d[
+            "Commodity Balances - Livestock and Fish Primary Equivalent - Marine Fish, Other - 2764 - Production - 5510 - tonnes"
+          ]
+        ),
+      ],
     };
   },
   function (data) {
-    initData = data["1961"];
+    initData = data.filter((x) => x.year === "1961");
     console.log("AA", initData);
 
-    Highcharts.chart("container-coordinates", {
+    productionChart = Highcharts.chart("container-coordinates", {
       chart: {
         type: "spline",
         parallelCoordinates: true,
@@ -71,6 +66,13 @@ d3.csv(
               "The chart has 7 Y axes across the chart displaying Training date, Miles for training run, Training time, Shoe brand, Running pace per mile, Short or long, and After 2004.",
           },
         },
+      },
+      credits: {
+        enabled: false,
+      },
+
+      exporting: {
+        enabled: false,
       },
       plotOptions: {
         series: {
@@ -120,38 +122,38 @@ d3.csv(
       yAxis: [
         {
           min: 0,
-          tooltipValueFormat: "thousand tonnes",
+          tooltipValueFormat: "{value} thousand tonnes",
         },
         {
           min: 0,
-          tooltipValueFormat: "thousand tonnes",
+          tooltipValueFormat: "{value} thousand tonnes",
         },
         {
           min: 0,
-          tooltipValueFormat: "thousand tonnes",
+          tooltipValueFormat: "{value} thousand tonnes",
         },
         {
           min: 0,
-          tooltipValueFormat: "thousand tonnes",
+          tooltipValueFormat: "{value} thousand tonnes",
         },
         {
           min: 0,
-          tooltipValueFormat: "thousand tonnes",
+          tooltipValueFormat: "{value} thousand tonnes",
         },
         {
           min: 0,
-          tooltipValueFormat: "thousand tonnes",
+          tooltipValueFormat: "{value} thousand tonnes",
         },
         {
           min: 0,
-          tooltipValueFormat: "thousand tonnes",
+          tooltipValueFormat: "{value} thousand tonnes",
         },
       ],
       colors: ["rgba(11, 200, 200, 0.1)"],
-      series: data.map(function (set, i) {
+      series: initData.map(function (set, i) {
         return {
-          name: "Runner " + i,
-          data: set,
+          name: set.location,
+          data: set.data,
           shadow: false,
         };
       }),

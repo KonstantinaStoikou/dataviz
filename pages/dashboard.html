@@ -68,9 +68,8 @@
     <!-- Custom scripts -->
     <script src="../scripts/overexploited-chart.js" defer></script>
     <script src="../scripts/sector-chart.js" defer></script>
-    <!-- <script src="../scripts/fish-production-chart.js" defer></script> -->
-    <script src="../scripts/fish-production2.js" defer></script>
     <script src="../scripts/map.js" defer></script>
+    <!-- <script src="../scripts/fish-production2.js" defer></script> -->
     <script src="../scripts/navbar.js" defer></script>
 
     <link
@@ -139,7 +138,12 @@
               <!-- Map Chart -->
               <div id="container-map"></div>
             </div>
-            <div class="col">lalalall</div>
+            <div class="col">
+              <!-- Parallel Coordinates Chart -->
+              <figure class="highcharts-figure">
+                <div id="container-coordinates"></div>
+              </figure>
+            </div>
           </div>
           <div class="row">
             <div class="col">
@@ -241,11 +245,6 @@
                 >1961</output
               >
             </div>
-          </figure>
-
-          <!-- Parallel Coordinates Chart -->
-          <figure class="highcharts-figure">
-            <div id="container-coordinates"></div>
           </figure>
         </div>
       </div>

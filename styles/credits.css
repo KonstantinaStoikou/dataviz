@@ -1,3 +1,8 @@
 .container {
     max-width: 50em;
 }
+
+.grey {
+    color: gray;
+    text-align: left !important;
+}

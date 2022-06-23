@@ -50,8 +50,15 @@
       };
     },
     function (data) {
-      initData = data.filter((x) => x.year === "2010");
-      console.log(initData);
+      initData = data.filter((x) => x.year === "1961");
+      (initData = initData.map(function (set, i) {
+        return {
+          name: set.location,
+          data: set.data,
+          shadow: false,
+        };
+      })),
+        console.log(initData);
 
       productionChart = Highcharts.chart("container-coordinates", {
         chart: {
@@ -106,7 +113,6 @@
                 var mapPoints = mapChart.series[0].points;
                 p = mapPoints.filter((x) => x.name === this.name)[0];
                 if (p) {
-                  console.log(p);
                   p.setState("hover");
                 }
               },
@@ -114,7 +120,6 @@
                 var mapPoints = mapChart.series[0].points;
                 p = mapPoints.filter((x) => x.name === this.name)[0];
                 if (p) {
-                  console.log(p);
                   p.setState();
                 }
               },
@@ -169,13 +174,7 @@
           },
         ],
         colors: ["rgba(11, 200, 200, 0.1)"],
-        series: initData.map(function (set, i) {
-          return {
-            name: set.location,
-            data: set.data,
-            shadow: false,
-          };
-        }),
+        series: initData,
       });
 
       function update(increment) {
@@ -187,16 +186,17 @@
         }
 
         newVal = data.filter((x) => x.year === input.value);
+        newVal = newVal.map(function (set, i) {
+          return {
+            name: set.location,
+            data: set.data,
+            shadow: false,
+          };
+        });
         console.log(newVal);
-        productionChart.series[0].setData(
-          newVal.map(function (set, i) {
-            return {
-              name: set.location,
-              data: set.data,
-              shadow: false,
-            };
-          })
-        );
+        // productionChart.series[0].setData(newVal);
+        // productionChart.series[0].update(newVal, true);
+        productionChart.series = newVal;
         output.innerHTML = input.value;
         if (input.value >= input.max) {
           // Auto-pause
@@ -254,7 +254,6 @@
           return null;
         }
       });
-      console.log(initData);
 
       // Create the chart
       mapChart = Highcharts.mapChart("container-map", {
@@ -301,7 +300,6 @@
                   var productionPoints = productionChart.series;
                   p = productionPoints.filter((x) => x.name === this.name)[0];
                   if (p) {
-                    console.log(p);
                     p.setState("hover");
                   }
                 },
@@ -309,7 +307,6 @@
                   var productionPoints = productionChart.series;
                   p = productionPoints.filter((x) => x.name === this.name)[0];
                   if (p) {
-                    console.log(p);
                     p.setState();
                   }
                 },
@@ -325,8 +322,7 @@
             name: "Quantity",
             states: {
               hover: {
-                // color: "#BADA55",
-                borderWidth: 1,
+                color: "#15c6ea",
               },
             },
             dataLabels: {

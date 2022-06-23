@@ -23,7 +23,6 @@ d3.csv(
 
       title: {
         text: "Global fishery by sector",
-        x: -80,
       },
 
       credits: {

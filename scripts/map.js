@@ -51,7 +51,7 @@
     },
     function (data) {
       initData = data.filter((x) => x.year === "2010");
-      console.log("AA", initData);
+      console.log(initData);
 
       productionChart = Highcharts.chart("container-coordinates", {
         chart: {
@@ -62,7 +62,7 @@
           },
         },
         title: {
-          text: "Marathon set",
+          text: "Global fishery catch by sector by country",
         },
         lang: {
           accessibility: {
@@ -103,6 +103,20 @@
             events: {
               mouseOver: function () {
                 this.group.toFront();
+                var mapPoints = mapChart.series[0].points;
+                p = mapPoints.filter((x) => x.name === this.name)[0];
+                if (p) {
+                  console.log(p);
+                  p.setState("hover");
+                }
+              },
+              mouseOut: function () {
+                var mapPoints = mapChart.series[0].points;
+                p = mapPoints.filter((x) => x.name === this.name)[0];
+                if (p) {
+                  console.log(p);
+                  p.setState();
+                }
               },
             },
           },

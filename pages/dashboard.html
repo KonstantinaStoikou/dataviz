@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="../styles/variables.css" />
     <link rel="stylesheet" href="../styles/navbar.css" />
     <link rel="stylesheet" href="../styles/dashboard.css" />
-    <link rel="stylesheet" href="../styles/overexploited-chart.css" />
+    <link rel="stylesheet" href="../styles/charts.css" />
 
     <!-- Font Awesome -->
     <link
@@ -40,19 +40,23 @@
     <!-- D3.js -->
     <script src="https://d3js.org/d3.v4.js"></script>
 
-    <!-- HighCharts -->
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/highcharts-more.js"></script>
-    <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    <script src="https://d3js.org/d3.v4.js"></script>
-
     <!-- JQuery -->
     <script
       src="https://code.jquery.com/jquery-3.6.0.min.js"
       integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
       crossorigin="anonymous"
     ></script>
+
+    <!-- HighCharts -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/data.js"></script>
+    <script src="http://code.highcharts.com/maps/modules/map.js"></script>
+    <script src="https://code.highcharts.com/modules/parallel-coordinates.js"></script>
+
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
     <!-- Bootstrap Script -->
     <script
@@ -64,7 +68,15 @@
     <!-- Custom scripts -->
     <script src="../scripts/overexploited-chart.js" defer></script>
     <script src="../scripts/sector-chart.js" defer></script>
+    <!-- <script src="../scripts/fish-production-chart.js" defer></script> -->
+    <script src="../scripts/fish-production2.js" defer></script>
+    <script src="../scripts/map.js" defer></script>
     <script src="../scripts/navbar.js" defer></script>
+
+    <link
+      href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"
+      rel="stylesheet"
+    />
   </head>
 
   <body class="d-flex h-100">
@@ -121,28 +133,41 @@
       </header>
 
       <div class="container">
-        <div class="row">
-          <div class="col-lg-2">
-            <ul class="list-group d-inline-flex">
-              <a
-                class="list-group-item list-group-item-action active"
-                href="https://getbootstrap.com/"
-                >Page 1</a
-              >
-              <a
-                class="list-group-item list-group-item-action"
-                href="https://getbootstrap.com/"
-                >Page 2</a
-              >
-              <a
-                class="list-group-item list-group-item-action"
-                href="https://getbootstrap.com/"
-                >Page 3</a
-              >
-            </ul>
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <!-- Map Chart -->
+              <div id="container-map"></div>
+            </div>
+            <div class="col">lalalall</div>
           </div>
-          <div class="col">
-            <div class="container">
+          <div class="row">
+            <div class="col">
+              <!-- Spider Chart -->
+              <figure class="highcharts-figure">
+                <div id="container-sector"></div>
+                <div id="play-controls">
+                  <button
+                    id="play-pause-button"
+                    class="fa fa-play"
+                    title="play"
+                  ></button>
+                  <input
+                    id="play-range"
+                    type="range"
+                    value="1950"
+                    min="1950"
+                    max="2010"
+                    style="color: white"
+                  />
+                  <output id="play-output" for="play-range" name="year"
+                    >1950</output
+                  >
+                </div>
+              </figure>
+            </div>
+            <div class="col">
+              <!-- Gauge Chart -->
               <figure class="highcharts-figure">
                 <div id="container-overexploited" class="chart-container"></div>
 
@@ -185,35 +210,43 @@
                     Mediterranean and Black Sea
                   </option>
                 </select>
+                <!-- Fishing Areas images -->
                 <img
                   id="map-img"
                   src="../images/fishing_areas/World.jpg"
                   alt="Fishing area"
                 />
               </figure>
-              <figure class="highcharts-figure">
-                <div id="container-sector"></div>
-                <div id="play-controls">
-                  <button
-                    id="play-pause-button"
-                    class="fa fa-play"
-                    title="play"
-                  ></button>
-                  <input
-                    id="play-range"
-                    type="range"
-                    value="1950"
-                    min="1950"
-                    max="2010"
-                    style="color: white"
-                  />
-                  <output id="play-output" for="play-range" name="year"
-                    >1950</output
-                  >
-                </div>
-              </figure>
             </div>
           </div>
+
+          <!-- Bubble Chart -->
+          <figure class="highcharts-figure">
+            <div id="container-production"></div>
+            <div id="play-controls1">
+              <button
+                id="play-pause-button1"
+                class="fa fa-play"
+                title="play"
+              ></button>
+              <input
+                id="play-range1"
+                type="range"
+                value="1961"
+                min="1961"
+                max="2013"
+                style="color: white"
+              />
+              <output id="play-output1" for="play-range" name="year"
+                >1961</output
+              >
+            </div>
+          </figure>
+
+          <!-- Parallel Coordinates Chart -->
+          <figure class="highcharts-figure">
+            <div id="container-coordinates"></div>
+          </figure>
         </div>
       </div>
 

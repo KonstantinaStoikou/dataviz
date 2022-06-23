@@ -53,7 +53,7 @@
     <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/data.js"></script>
-    <script src="http://code.highcharts.com/maps/modules/map.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/map.js"></script>
     <script src="https://code.highcharts.com/modules/parallel-coordinates.js"></script>
 
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
@@ -69,7 +69,6 @@
     <script src="../scripts/overexploited-chart.js" defer></script>
     <script src="../scripts/sector-chart.js" defer></script>
     <script src="../scripts/map.js" defer></script>
-    <!-- <script src="../scripts/fish-production2.js" defer></script> -->
     <script src="../scripts/navbar.js" defer></script>
 
     <link
@@ -134,6 +133,26 @@
       <div class="container">
         <div class="container">
           <div class="row">
+            <div id="play-controls">
+              <button
+                id="play-pause-button"
+                class="fa fa-play"
+                title="play"
+              ></button>
+              <input
+                id="play-range"
+                type="range"
+                value="1950"
+                min="1950"
+                max="2010"
+                style="color: white"
+              />
+              <output id="play-output" for="play-range" name="year"
+                >1950</output
+              >
+            </div>
+          </div>
+          <div class="row">
             <div class="col">
               <!-- Map Chart -->
               <div id="container-map"></div>
@@ -150,24 +169,6 @@
               <!-- Spider Chart -->
               <figure class="highcharts-figure">
                 <div id="container-sector"></div>
-                <div id="play-controls">
-                  <button
-                    id="play-pause-button"
-                    class="fa fa-play"
-                    title="play"
-                  ></button>
-                  <input
-                    id="play-range"
-                    type="range"
-                    value="1950"
-                    min="1950"
-                    max="2010"
-                    style="color: white"
-                  />
-                  <output id="play-output" for="play-range" name="year"
-                    >1950</output
-                  >
-                </div>
               </figure>
             </div>
             <div class="col">
@@ -226,7 +227,7 @@
 
           <!-- Bubble Chart -->
           <figure class="highcharts-figure">
-            <div id="container-production"></div>
+            <!-- <div id="container-production"></div>
             <div id="play-controls1">
               <button
                 id="play-pause-button1"
@@ -243,8 +244,8 @@
               />
               <output id="play-output1" for="play-range" name="year"
                 >1961</output
-              >
-            </div>
+              > -->
+            <!-- </div> -->
           </figure>
         </div>
       </div>

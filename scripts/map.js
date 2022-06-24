@@ -51,14 +51,13 @@
     },
     function (data) {
       initData = data.filter((x) => x.year === "1961");
-      (initData = initData.map(function (set, i) {
+      initData = initData.map(function (set, i) {
         return {
           name: set.location,
           data: set.data,
           shadow: false,
         };
-      })),
-        console.log(initData);
+      });
 
       productionChart = Highcharts.chart("container-coordinates", {
         chart: {
@@ -86,6 +85,7 @@
         exporting: {
           enabled: false,
         },
+
         plotOptions: {
           series: {
             accessibility: {
@@ -193,10 +193,7 @@
             shadow: false,
           };
         });
-        console.log(newVal);
-        // productionChart.series[0].setData(newVal);
-        // productionChart.series[0].update(newVal, true);
-        productionChart.series = newVal;
+        productionChart.series[0].update(newVal);
         output.innerHTML = input.value;
         if (input.value >= input.max) {
           // Auto-pause
@@ -229,6 +226,99 @@
 
       $("#play-range").bind("input", function () {
         update();
+      });
+    }
+  );
+
+  d3.csv(
+    "https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-10-12/capture-fisheries-vs-aquaculture.csv",
+    function (d) {
+      // process data
+      return {
+        location: d.Entity,
+        year: d.Year,
+        aquaculture: parseFloat(d["Aquaculture production (metric tons)"]),
+        fisheries: parseFloat(d["Capture fisheries production (metric tons)"]),
+      };
+    },
+    function (data) {
+      initData = data.filter((x) => x.location === "World");
+      let aquacultureData = Object.values(
+        initData.reduce((acc, cur) => {
+          acc.push(cur.aquaculture);
+          return acc;
+        }, [])
+      );
+      let fisheriesData = Object.values(
+        initData.reduce((acc, cur) => {
+          acc.push(cur.fisheries);
+          return acc;
+        }, [])
+      );
+
+      areaChart = Highcharts.chart("container-area", {
+        chart: {
+          type: "area",
+        },
+        credits: {
+          enabled: false,
+        },
+
+        exporting: {
+          enabled: false,
+        },
+
+        title: {
+          text: "Capture fisheries vs aquaculture",
+        },
+
+        xAxis: {
+          allowDecimals: false,
+          labels: {
+            formatter: function () {
+              return this.value; // clean, unformatted number for year
+            },
+          },
+        },
+        yAxis: {
+          title: {
+            text: "Metric tons",
+          },
+          labels: {
+            formatter: function () {
+              return this.value / 1000 + "k";
+            },
+          },
+        },
+        tooltip: {
+          pointFormat:
+            "{point.y:,.0f} metric tons of {series.name} in {point.x}",
+        },
+        plotOptions: {
+          area: {
+            pointStart: 1940,
+            marker: {
+              enabled: false,
+              symbol: "circle",
+              radius: 2,
+              states: {
+                hover: {
+                  enabled: true,
+                },
+              },
+            },
+          },
+        },
+        series: [
+          {
+            name: "Aquaculture",
+            data: aquacultureData,
+          },
+          {
+            name: "Fisheries",
+            data: fisheriesData,
+          },
+        ],
       });
     }
   );

@@ -131,107 +131,105 @@
       </header>
 
       <div class="container">
-        <div class="container">
-          <div class="row">
-            <div id="play-controls">
-              <button
-                id="play-pause-button"
-                class="fa fa-play"
-                title="play"
-              ></button>
-              <input
-                id="play-range"
-                type="range"
-                value="1950"
-                min="1950"
-                max="2017"
-                style="color: white"
+        <div class="row">
+          <div id="play-controls">
+            <button
+              id="play-pause-button"
+              class="fa fa-play"
+              title="play"
+            ></button>
+            <input
+              id="play-range"
+              type="range"
+              value="1950"
+              min="1950"
+              max="2018"
+              style="color: white"
+            />
+            <output id="play-output" for="play-range" name="year">1950</output>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <!-- Map Chart -->
+            <div id="container-map"></div>
+          </div>
+
+          <div class="col col-lg-4">
+            <!-- Gauge Chart -->
+            <figure class="highcharts-figure">
+              <div id="container-overexploited" class="chart-container"></div>
+
+              <label for="region">Choose a fishing area:</label>
+              <select name="region" id="region">
+                <option value="World" selected="selected">World</option>
+                <option value="Northeast Central Atlantic">
+                  Northeast Central Atlantic
+                </option>
+                <option value="Northwest Central Atlantic">
+                  Northwest Central Atlantic
+                </option>
+                <option value="Southeast Central Atlantic">
+                  Southeast Central Atlantic
+                </option>
+                <option value="Eastern Central Atlantic">
+                  Eastern Central Atlantic
+                </option>
+                <option value="Western Central Atlantic">
+                  Western Central Atlantic
+                </option>
+                <option value="Southwest Atlantic">Southwest Atlantic</option>
+                <option value="Northeast Pacific">Northeast Pacific</option>
+                <option value="Northwest Pacific">Northwest Pacific</option>
+                <option value="Southeast Pacific">Southeast Pacific</option>
+                <option value="Eastern Central Pacific">
+                  Eastern Central Pacific
+                </option>
+                <option value="Western Central Pacific">
+                  Western Central Pacific
+                </option>
+                <option value="Southwest Pacific">Southwest Pacific</option>
+                <option value="Western Indian Ocean">
+                  Western Indian Ocean
+                </option>
+                <option value="Eastern Indian Ocean">
+                  Eastern Indian Ocean
+                </option>
+                <option value="Mediterranean and Black Sea">
+                  Mediterranean and Black Sea
+                </option>
+              </select>
+              <!-- Fishing Areas images -->
+              <img
+                id="map-img"
+                src="../images/fishing_areas/World.jpg"
+                alt="Fishing area"
               />
-              <output id="play-output" for="play-range" name="year"
-                >1950</output
-              >
-            </div>
+            </figure>
           </div>
-          <div class="row">
-            <div class="col">
-              <!-- Map Chart -->
-              <div id="container-map"></div>
-            </div>
-            <div class="col">
-              <!-- Parallel Coordinates Chart -->
-              <figure class="highcharts-figure">
-                <div id="container-coordinates"></div>
-              </figure>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <!-- Spider Chart -->
-              <figure class="highcharts-figure">
-                <div id="container-sector"></div>
-              </figure>
-            </div>
-            <div class="col">
-              <!-- Gauge Chart -->
-              <figure class="highcharts-figure">
-                <div id="container-overexploited" class="chart-container"></div>
+        </div>
 
-                <label for="region">Choose a fishing area:</label>
-                <select name="region" id="region">
-                  <option value="World" selected="selected">World</option>
-                  <option value="Northeast Central Atlantic">
-                    Northeast Central Atlantic
-                  </option>
-                  <option value="Northwest Central Atlantic">
-                    Northwest Central Atlantic
-                  </option>
-                  <option value="Southeast Central Atlantic">
-                    Southeast Central Atlantic
-                  </option>
-                  <option value="Eastern Central Atlantic">
-                    Eastern Central Atlantic
-                  </option>
-                  <option value="Western Central Atlantic">
-                    Western Central Atlantic
-                  </option>
-                  <option value="Southwest Atlantic">Southwest Atlantic</option>
-                  <option value="Northeast Pacific">Northeast Pacific</option>
-                  <option value="Northwest Pacific">Northwest Pacific</option>
-                  <option value="Southeast Pacific">Southeast Pacific</option>
-                  <option value="Eastern Central Pacific">
-                    Eastern Central Pacific
-                  </option>
-                  <option value="Western Central Pacific">
-                    Western Central Pacific
-                  </option>
-                  <option value="Southwest Pacific">Southwest Pacific</option>
-                  <option value="Western Indian Ocean">
-                    Western Indian Ocean
-                  </option>
-                  <option value="Eastern Indian Ocean">
-                    Eastern Indian Ocean
-                  </option>
-                  <option value="Mediterranean and Black Sea">
-                    Mediterranean and Black Sea
-                  </option>
-                </select>
-                <!-- Fishing Areas images -->
-                <img
-                  id="map-img"
-                  src="../images/fishing_areas/World.jpg"
-                  alt="Fishing area"
-                />
-              </figure>
-            </div>
+        <div class="row">
+          <div class="col">
+            <!-- Parallel Coordinates Chart -->
+            <figure class="highcharts-figure">
+              <div id="container-coordinates"></div>
+            </figure>
           </div>
 
-          <!-- Area chart -->
+          <div class="col">
+            <!-- Area chart -->
+            <figure class="highcharts-figure">
+              <div id="container-area"></div>
+            </figure>
+          </div>
+
+          <div class="col"></div>
+          <!-- Spider Chart -->
           <figure class="highcharts-figure">
-            <div id="container-area"></div>
+            <div id="container-sector"></div>
           </figure>
-
-          <!-- Bubble Chart -->
-          <!-- <figure class="highcharts-figure"></figure> -->
         </div>
       </div>
 

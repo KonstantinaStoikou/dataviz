@@ -12,6 +12,7 @@ initYear = "1950";
       return {
         location: d.Entity,
         year: d.Year,
+        code: d.Code,
         data: [
           parseInt(
             d[
@@ -40,22 +41,23 @@ initYear = "1950";
           ),
           parseInt(
             d[
-              "Commodity Balances - Livestock and Fish Primary Equivalent - Molluscs, Other - 2767 - Production - 5510 - tonnes"
+              "Commodity Balances - Livestock and Fish Primary Equivalent - Marine Fish, Other - 2764 - Production - 5510 - tonnes"
             ]
           ),
           parseInt(
             d[
-              "Commodity Balances - Livestock and Fish Primary Equivalent - Marine Fish, Other - 2764 - Production - 5510 - tonnes"
+              "Commodity Balances - Livestock and Fish Primary Equivalent - Molluscs, Other - 2767 - Production - 5510 - tonnes"
             ]
           ),
         ],
       };
     },
     function (data) {
-      initData = data.filter((x) => x.year === initYear);
+      initData = data.filter((x) => x.year === "1961");
       initData = initData.map(function (set, i) {
         return {
           name: set.location,
+          code: set.code,
           data: set.data,
           shadow: false,
         };
@@ -70,16 +72,9 @@ initYear = "1950";
           },
         },
         title: {
-          text: "Global fishery catch by sector by country",
+          text: "Fish & seafood production by country",
         },
-        lang: {
-          accessibility: {
-            axis: {
-              yAxisDescriptionPlural:
-                "The chart has 7 Y axes across the chart displaying Training date, Miles for training run, Training time, Shoe brand, Running pace per mile, Short or long, and After 2004.",
-            },
-          },
-        },
+
         credits: {
           enabled: false,
         },
@@ -140,8 +135,8 @@ initYear = "1950";
             "Cephalopods",
             "Demersal Fish",
             "Freshwater Fish",
-            "Molluscs",
             "Marine Fish",
+            "Molluscs",
           ],
           offset: 10,
         },
@@ -175,47 +170,33 @@ initYear = "1950";
             tooltipValueFormat: "{value} thousand tonnes",
           },
         ],
-        colors: ["rgba(11, 200, 200, 0.1)"],
+
+        colors: ["rgba(177, 193, 224, 0.25)"],
+
         series: initData,
       });
-
-      if (initData.length === 0) {
-        productionChart.update({
-          subtitle: {
-            text: "No data available for year " + initYear,
-          },
-        });
-      }
 
       function update(increment) {
         var input = $("#play-range")[0];
 
+        value = parseInt(input.value);
         if (increment) {
-          value = parseInt(input.value);
-          // value = parseInt(input.value) + increment;
+          value += increment;
         }
 
-        newVal = data.filter((x) => x.year === value);
-        if (newVal.length === 0) {
-          productionChart.update({
-            subtitle: {
-              text: "No data available for year " + value,
-            },
-          });
-        } else {
+        newVal = data.filter((x) => x.year === String(value));
+
+        if (newVal.length > 0) {
           newVal = newVal.map(function (set, i) {
             return {
               name: set.location,
               data: set.data,
+              code: set.code,
               shadow: false,
             };
           });
-          console.log(newVal);
           productionChart.update({
             series: newVal,
-            subtitle: {
-              text: "",
-            },
           });
         }
       }
@@ -252,6 +233,7 @@ initYear = "1950";
       return {
         location: d.Entity,
         year: d.Year,
+        code: d.Code,
         aquaculture: parseFloat(d["Aquaculture production (metric tons)"]),
         fisheries: parseFloat(d["Capture fisheries production (metric tons)"]),
       };
@@ -285,7 +267,7 @@ initYear = "1950";
         },
 
         title: {
-          text: "Capture fisheries vs aquaculture in the world",
+          text: "Production of fisheries vs aquaculture (worldwide)",
         },
 
         xAxis: {
@@ -298,7 +280,7 @@ initYear = "1950";
         },
         yAxis: {
           title: {
-            text: "Metric tons",
+            text: "Metric tons of fish",
           },
           labels: {
             formatter: function () {
@@ -307,8 +289,7 @@ initYear = "1950";
           },
         },
         tooltip: {
-          pointFormat:
-            "{point.y:,.0f} metric tons of {series.name} in {point.x}",
+          pointFormat: "{point.y:,.0f} metric tons of fish from {series.name}",
         },
         plotOptions: {
           area: {
@@ -346,12 +327,14 @@ initYear = "1950";
       return {
         location: d.Code,
         year: d.Year,
+        code: d.Code,
         consumption: parseFloat(
           d["Fish, Seafood- Food supply quantity (kg/capita/yr) (FAO, 2020)"]
         ),
       };
     },
     function (data) {
+      var clickedPointId;
       initData = data.filter((x) => x.year === initYear);
       initData = initData.map(function (e) {
         if (e.location != "") {
@@ -376,7 +359,7 @@ initYear = "1950";
         },
 
         title: {
-          text: "Fish & seafood supply quantity (kg/capita/yr)",
+          text: "Fish & seafood consumption (kg/capita/yr)",
         },
 
         tooltip: {
@@ -400,60 +383,81 @@ initYear = "1950";
           series: {
             point: {
               events: {
-                mouseOver: function () {
-                  // hover over country in productionChart
-                  var productionPoints = productionChart.series;
-                  p = productionPoints.filter((x) => x.name === this.name)[0];
-                  if (p) {
-                    p.setState("hover");
-                  }
+                click: function () {
+                  if (clickedPointId !== this.id) {
+                    clickedPointId = this.id;
 
-                  // change country on areaChart
-                  initData = areaData.filter((x) => x.location === this.name);
-                  let aquacultureData = Object.values(
-                    initData.reduce((acc, cur) => {
-                      acc.push(cur.aquaculture);
-                      return acc;
-                    }, [])
-                  );
-                  let fisheriesData = Object.values(
-                    initData.reduce((acc, cur) => {
-                      acc.push(cur.fisheries);
-                      return acc;
-                    }, [])
-                  );
-                  areaChart.series[0].setData(aquacultureData);
-                  areaChart.series[1].setData(fisheriesData);
-                  areaChart.update({
-                    title: {
-                      text: "Capture fisheries vs aquaculture in " + this.name,
-                    },
-                  });
-                },
-                mouseOut: function () {
-                  // stop hovering over country in productionChart
-                  var productionPoints = productionChart.series;
-                  p = productionPoints.filter((x) => x.name === this.name)[0];
-                  if (p) {
-                    p.setState();
-                  }
+                    this.color = ["#15c6ea"];
+                    // hover over country in productionChart
+                    var productionPoints = productionChart.series;
+                    p = productionPoints.filter(
+                      (x) => x.userOptions.code === this.code
+                    )[0];
+                    if (p) {
+                      console.log(p);
+                      p.setState("hover");
+                    }
 
-                  // change to World in areaChart
-                  initData = areaData.filter((x) => x.location === "World");
-                  let aquacultureData = Object.values(
-                    initData.reduce((acc, cur) => {
-                      acc.push(cur.aquaculture);
-                      return acc;
-                    }, [])
-                  );
-                  let fisheriesData = Object.values(
-                    initData.reduce((acc, cur) => {
-                      acc.push(cur.fisheries);
-                      return acc;
-                    }, [])
-                  );
-                  areaChart.series[0].setData(aquacultureData);
-                  areaChart.series[1].setData(fisheriesData);
+                    // change country on areaChart
+                    initData = areaData.filter((x) => x.code === this.code);
+                    let aquacultureData = Object.values(
+                      initData.reduce((acc, cur) => {
+                        acc.push(cur.aquaculture);
+                        return acc;
+                      }, [])
+                    );
+                    let fisheriesData = Object.values(
+                      initData.reduce((acc, cur) => {
+                        acc.push(cur.fisheries);
+                        return acc;
+                      }, [])
+                    );
+                    areaChart.series[0].setData(aquacultureData);
+                    areaChart.series[1].setData(fisheriesData);
+                    areaChart.update({
+                      title: {
+                        text:
+                          "Capture fisheries vs aquaculture in " + this.name,
+                      },
+                    });
+                  } else {
+                    clickedPointId = null;
+                    this.color = mapChart.colorAxis[0].toColor(
+                      this.value,
+                      this
+                    );
+
+                    // stop hovering over country in productionChart
+                    var productionPoints = productionChart.series;
+                    p = productionPoints.filter(
+                      (x) => x.userOptions.code === this.code
+                    )[0];
+                    if (p) {
+                      p.setState();
+                    }
+
+                    // change to World in areaChart
+                    initData = areaData.filter((x) => x.location === "World");
+                    let aquacultureData = Object.values(
+                      initData.reduce((acc, cur) => {
+                        acc.push(cur.aquaculture);
+                        return acc;
+                      }, [])
+                    );
+                    let fisheriesData = Object.values(
+                      initData.reduce((acc, cur) => {
+                        acc.push(cur.fisheries);
+                        return acc;
+                      }, [])
+                    );
+                    areaChart.series[0].setData(aquacultureData);
+                    areaChart.series[1].setData(fisheriesData);
+                    areaChart.update({
+                      title: {
+                        text: "Capture fisheries vs aquaculture worldwide",
+                      },
+                    });
+                  }
                 },
               },
             },

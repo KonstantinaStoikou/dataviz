@@ -90,6 +90,6 @@
 }
 
 #container-coordinates .highcharts-series-hover path {
-    stroke: rgb(255 66 66);
+    stroke: var(--main);
     stroke-width: 2px;
 }

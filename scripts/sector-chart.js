@@ -15,6 +15,8 @@ d3.csv(
   function (data) {
     data = Object.assign({}, ...data);
 
+    cur_year = "2017";
+
     var sectorChart = Highcharts.chart("container-sector", {
       chart: {
         polar: true,
@@ -22,7 +24,11 @@ d3.csv(
       },
 
       title: {
-        text: "Global fishery by sector",
+        text: "Amount of fish caught by sector (worldwide)",
+      },
+
+      subtitle: {
+        text: "Year 2017",
       },
 
       credits: {
@@ -35,13 +41,6 @@ d3.csv(
 
       pane: {
         size: "80%",
-      },
-
-      mapNavigation: {
-        enabled: true,
-        buttonOptions: {
-          verticalAlign: "bottom",
-        },
       },
 
       xAxis: {
@@ -79,7 +78,8 @@ d3.csv(
           name: "Number of fish",
           data: Object.values(data[1950]),
           pointPlacement: "on",
-          fillColor: "#91d4db",
+          fillColor: "rgba(177, 193, 224, 0.7)",
+          color: "#15c6ea",
         },
       ],
 
@@ -95,9 +95,6 @@ d3.csv(
                 verticalAlign: "bottom",
                 layout: "horizontal",
               },
-              pane: {
-                size: "70%",
-              },
             },
           },
         ],
@@ -107,9 +104,11 @@ d3.csv(
     function update(increment) {
       var input = $("#play-range")[0];
 
+      value = parseInt(input.value);
       if (increment) {
-        value = parseInt(input.value) + increment;
+        value += increment;
       }
+
       newVal = data[value];
       if (newVal) {
         newVal = Object.values(newVal);
@@ -121,19 +120,14 @@ d3.csv(
         );
         sectorChart.update({
           subtitle: {
-            text: "",
+            text: "Year " + value,
           },
         });
+        cur_year = value;
       } else {
-        sectorChart.series[0].update(
-          {
-            data: [0, 0, 0, 0, 0],
-          },
-          true
-        );
         sectorChart.update({
           subtitle: {
-            text: "No data available for year " + value,
+            text: "Year " + cur_year + " (No data available for " + value + ")",
           },
         });
       }

@@ -75,6 +75,10 @@ initYear = "1950";
           text: "Fish & seafood production by country",
         },
 
+        subtitle: {
+          text: "Year 1961 (No data available for 1950)",
+        },
+
         credits: {
           enabled: false,
         },
@@ -310,10 +314,12 @@ initYear = "1950";
           {
             name: "Aquaculture",
             data: aquacultureData,
+            color: "rgba(20, 20, 20, 0.25)",
           },
           {
             name: "Fisheries",
             data: fisheriesData,
+            color: "rgba(177, 193, 224, 0.25)",
           },
         ],
       });
@@ -363,6 +369,7 @@ initYear = "1950";
         },
 
         tooltip: {
+          nullFormat: "No data available for {point.name}",
           pointFormat: "{point.name}: <b>{point.value} kg/capita/yr</b><br/>",
         },
 
@@ -385,21 +392,38 @@ initYear = "1950";
               events: {
                 click: function () {
                   if (clickedPointId !== this.id) {
+                    if (clickedPointId) {
+                      var mapPoints = mapChart.series[0].points;
+                      map_p = mapPoints.filter(
+                        (x) => x.id === clickedPointId
+                      )[0];
+                      if (map_p) {
+                        map_p.update(
+                          (map_p.color = mapChart.colorAxis[0].toColor(
+                            map_p.value,
+                            map_p
+                          ))
+                        );
+                      }
+                    }
                     clickedPointId = this.id;
 
                     this.color = ["#15c6ea"];
                     // hover over country in productionChart
                     var productionPoints = productionChart.series;
                     p = productionPoints.filter(
-                      (x) => x.userOptions.code === this.code
+                      (x) =>
+                        x.userOptions.code === this.code ||
+                        x.userOptions.code === this["iso-a3"]
                     )[0];
                     if (p) {
-                      console.log(p);
                       p.setState("hover");
                     }
 
                     // change country on areaChart
-                    initData = areaData.filter((x) => x.code === this.code);
+                    initData = areaData.filter(
+                      (x) => x.code === this.code || x.code === this["iso-a3"]
+                    );
                     let aquacultureData = Object.values(
                       initData.reduce((acc, cur) => {
                         acc.push(cur.aquaculture);
@@ -469,6 +493,7 @@ initYear = "1950";
             data: initData,
             joinBy: ["iso-a3", "code"],
             name: "Quantity",
+            nullInteraction: true,
             states: {
               hover: {
                 color: "#15c6ea",

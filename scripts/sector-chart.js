@@ -105,37 +105,47 @@ d3.csv(
     });
 
     function update(increment) {
-      var input = $("#play-range")[0],
-        output = $("#play-output")[0];
+      var input = $("#play-range")[0];
 
       if (increment) {
-        input.value = parseInt(input.value) + increment;
+        value = parseInt(input.value) + increment;
       }
-      newVal = Object.values(data[input.value]);
-      sectorChart.series[0].update(
-        {
-          data: newVal,
-        },
-        true
-      );
-      output.innerHTML = input.value;
-      if (input.value >= input.max) {
-        // Auto-pause
-        pause($("#play-pause-button")[0]);
+      newVal = data[value];
+      if (newVal) {
+        newVal = Object.values(newVal);
+        sectorChart.series[0].update(
+          {
+            data: newVal,
+          },
+          true
+        );
+        sectorChart.update({
+          subtitle: {
+            text: "",
+          },
+        });
+      } else {
+        sectorChart.series[0].update(
+          {
+            data: [0, 0, 0, 0, 0],
+          },
+          true
+        );
+        sectorChart.update({
+          subtitle: {
+            text: "No data available for year " + value,
+          },
+        });
       }
     }
 
-    function play(button) {
-      button.title = "pause";
-      button.className = "fa fa-pause";
+    function play() {
       sectorChart.sequenceTimer = setInterval(function () {
         update(1);
       }, 700);
     }
 
-    function pause(button) {
-      button.title = "play";
-      button.className = "fa fa-play";
+    function pause() {
       clearTimeout(sectorChart.sequenceTimer);
       sectorChart.sequenceTimer = undefined;
     }

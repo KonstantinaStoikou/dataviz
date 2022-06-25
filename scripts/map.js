@@ -1,3 +1,5 @@
+initYear = "1950";
+
 (async () => {
   const topology = await fetch(
     "https://code.highcharts.com/mapdata/custom/world-highres3.topo.json"
@@ -50,7 +52,7 @@
       };
     },
     function (data) {
-      initData = data.filter((x) => x.year === "1961");
+      initData = data.filter((x) => x.year === initYear);
       initData = initData.map(function (set, i) {
         return {
           name: set.location,
@@ -177,41 +179,54 @@
         series: initData,
       });
 
+      if (initData.length === 0) {
+        productionChart.update({
+          subtitle: {
+            text: "No data available for year " + initYear,
+          },
+        });
+      }
+
       function update(increment) {
-        var input = $("#play-range")[0],
-          output = $("#play-output")[0];
+        var input = $("#play-range")[0];
 
         if (increment) {
-          input.value = parseInt(input.value) + increment;
+          value = parseInt(input.value);
+          // value = parseInt(input.value) + increment;
         }
 
-        newVal = data.filter((x) => x.year === input.value);
-        newVal = newVal.map(function (set, i) {
-          return {
-            name: set.location,
-            data: set.data,
-            shadow: false,
-          };
-        });
-        productionChart.series[0].update(newVal);
-        output.innerHTML = input.value;
-        if (input.value >= input.max) {
-          // Auto-pause
-          pause($("#play-pause-button")[0]);
+        newVal = data.filter((x) => x.year === value);
+        if (newVal.length === 0) {
+          productionChart.update({
+            subtitle: {
+              text: "No data available for year " + value,
+            },
+          });
+        } else {
+          newVal = newVal.map(function (set, i) {
+            return {
+              name: set.location,
+              data: set.data,
+              shadow: false,
+            };
+          });
+          console.log(newVal);
+          productionChart.update({
+            series: newVal,
+            subtitle: {
+              text: "",
+            },
+          });
         }
       }
 
-      function play(button) {
-        button.title = "pause";
-        button.className = "fa fa-pause";
+      function play() {
         productionChart.sequenceTimer = setInterval(function () {
           update(1);
         }, 700);
       }
 
-      function pause(button) {
-        button.title = "play";
-        button.className = "fa fa-play";
+      function pause() {
         clearTimeout(productionChart.sequenceTimer);
         productionChart.sequenceTimer = undefined;
       }
@@ -242,6 +257,7 @@
       };
     },
     function (data) {
+      areaData = data;
       initData = data.filter((x) => x.location === "World");
       let aquacultureData = Object.values(
         initData.reduce((acc, cur) => {
@@ -269,14 +285,14 @@
         },
 
         title: {
-          text: "Capture fisheries vs aquaculture",
+          text: "Capture fisheries vs aquaculture in the world",
         },
 
         xAxis: {
           allowDecimals: false,
           labels: {
             formatter: function () {
-              return this.value; // clean, unformatted number for year
+              return this.value;
             },
           },
         },
@@ -336,7 +352,7 @@
       };
     },
     function (data) {
-      initData = data.filter((x) => x.year === "2010");
+      initData = data.filter((x) => x.year === initYear);
       initData = initData.map(function (e) {
         if (e.location != "") {
           return { code: e.location, value: e.consumption };
@@ -363,10 +379,6 @@
           text: "Fish & seafood supply quantity (kg/capita/yr)",
         },
 
-        subtitle: {
-          text: 'Source map: <a href="http://code.highcharts.com/mapdata/custom/world-highres3.topo.json">World countries</a>',
-        },
-
         tooltip: {
           pointFormat: "{point.name}: <b>{point.value} kg/capita/yr</b><br/>",
         },
@@ -379,7 +391,9 @@
         },
 
         colorAxis: {
-          min: 0,
+          min: 1,
+          // max value is the maximum in all years (Maldives 2010)
+          max: 191.75,
         },
 
         plotOptions: {
@@ -387,18 +401,59 @@
             point: {
               events: {
                 mouseOver: function () {
+                  // hover over country in productionChart
                   var productionPoints = productionChart.series;
                   p = productionPoints.filter((x) => x.name === this.name)[0];
                   if (p) {
                     p.setState("hover");
                   }
+
+                  // change country on areaChart
+                  initData = areaData.filter((x) => x.location === this.name);
+                  let aquacultureData = Object.values(
+                    initData.reduce((acc, cur) => {
+                      acc.push(cur.aquaculture);
+                      return acc;
+                    }, [])
+                  );
+                  let fisheriesData = Object.values(
+                    initData.reduce((acc, cur) => {
+                      acc.push(cur.fisheries);
+                      return acc;
+                    }, [])
+                  );
+                  areaChart.series[0].setData(aquacultureData);
+                  areaChart.series[1].setData(fisheriesData);
+                  areaChart.update({
+                    title: {
+                      text: "Capture fisheries vs aquaculture in " + this.name,
+                    },
+                  });
                 },
                 mouseOut: function () {
+                  // stop hovering over country in productionChart
                   var productionPoints = productionChart.series;
                   p = productionPoints.filter((x) => x.name === this.name)[0];
                   if (p) {
                     p.setState();
                   }
+
+                  // change to World in areaChart
+                  initData = areaData.filter((x) => x.location === "World");
+                  let aquacultureData = Object.values(
+                    initData.reduce((acc, cur) => {
+                      acc.push(cur.aquaculture);
+                      return acc;
+                    }, [])
+                  );
+                  let fisheriesData = Object.values(
+                    initData.reduce((acc, cur) => {
+                      acc.push(cur.fisheries);
+                      return acc;
+                    }, [])
+                  );
+                  areaChart.series[0].setData(aquacultureData);
+                  areaChart.series[1].setData(fisheriesData);
                 },
               },
             },
@@ -423,6 +478,14 @@
         ],
       });
 
+      if (initData.length === 0) {
+        mapChart.update({
+          subtitle: {
+            text: "No data available for year " + initYear,
+          },
+        });
+      }
+
       function update(increment) {
         var input = $("#play-range")[0],
           output = $("#play-output")[0];
@@ -432,6 +495,25 @@
         }
 
         newVal = data.filter((x) => x.year === input.value);
+        if (newVal.length === 0) {
+          mapChart.update({
+            subtitle: {
+              text: "No data available for year " + input.value,
+            },
+          });
+        } else {
+          world_consumption = newVal.filter(
+            (x) => x.location === "OWID_WRL"
+          )[0];
+          world_consumption = world_consumption
+            ? world_consumption.consumption
+            : "-";
+          mapChart.update({
+            subtitle: {
+              text: "Worldwide: " + world_consumption + "kg/capital/year",
+            },
+          });
+        }
         newVal = newVal.map(function (e) {
           if (e.location != "") {
             return { code: e.location, value: e.consumption };
@@ -440,9 +522,9 @@
           }
         });
         mapChart.series[0].setData(newVal);
+
         output.innerHTML = input.value;
         if (input.value >= input.max) {
-          // Auto-pause
           pause($("#play-pause-button")[0]);
         }
       }

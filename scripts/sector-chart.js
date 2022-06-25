@@ -15,7 +15,7 @@ d3.csv(
   function (data) {
     data = Object.assign({}, ...data);
 
-    cur_year = "2017";
+    var cur_year = "1950";
 
     var sectorChart = Highcharts.chart("container-sector", {
       chart: {
@@ -28,7 +28,7 @@ d3.csv(
       },
 
       subtitle: {
-        text: "Year 2017",
+        text: "Year 1950",
       },
 
       credits: {
@@ -76,7 +76,7 @@ d3.csv(
       series: [
         {
           name: "Number of fish",
-          data: Object.values(data[1950]),
+          data: Object.values(data[cur_year]),
           pointPlacement: "on",
           fillColor: "rgba(177, 193, 224, 0.7)",
           color: "#15c6ea",

@@ -53,6 +53,7 @@ initYear = "1950";
       };
     },
     function (data) {
+      var cur_year = "1961";
       initData = data.filter((x) => x.year === "1961");
       initData = initData.map(function (set, i) {
         return {
@@ -190,7 +191,14 @@ initYear = "1950";
 
         newVal = data.filter((x) => x.year === String(value));
 
-        if (newVal.length > 0) {
+        if (newVal.length === 0) {
+          productionChart.update({
+            subtitle: {
+              text:
+                "Year " + cur_year + " (No data available for " + value + ")",
+            },
+          });
+        } else {
           newVal = newVal.map(function (set, i) {
             return {
               name: set.location,
@@ -202,6 +210,7 @@ initYear = "1950";
           productionChart.update({
             series: newVal,
           });
+          cur_year = value;
         }
       }
 
@@ -405,6 +414,15 @@ initYear = "1950";
                           ))
                         );
                       }
+                      var productionPoints = productionChart.series;
+                      p = productionPoints.filter(
+                        (x) =>
+                          x.userOptions.code === map_p.code ||
+                          x.userOptions.code === map_p["iso-a3"]
+                      )[0];
+                      if (p) {
+                        p.setState("");
+                      }
                     }
                     clickedPointId = this.id;
 
@@ -444,20 +462,26 @@ initYear = "1950";
                           "Capture fisheries vs aquaculture in " + this.name,
                       },
                     });
-                  } else {
+                  }
+                  // unclick or click elsewhere event
+                  else {
                     clickedPointId = null;
-                    this.color = mapChart.colorAxis[0].toColor(
-                      this.value,
-                      this
+                    this.update(
+                      (this.color = mapChart.colorAxis[0].toColor(
+                        this.value,
+                        this
+                      ))
                     );
 
                     // stop hovering over country in productionChart
                     var productionPoints = productionChart.series;
                     p = productionPoints.filter(
-                      (x) => x.userOptions.code === this.code
+                      (x) =>
+                        x.userOptions.code === this.code ||
+                        x.userOptions.code === this["iso-a3"]
                     )[0];
                     if (p) {
-                      p.setState();
+                      p.setState("");
                     }
 
                     // change to World in areaChart
@@ -494,6 +518,7 @@ initYear = "1950";
             joinBy: ["iso-a3", "code"],
             name: "Quantity",
             nullInteraction: true,
+            cursor: "pointer",
             states: {
               hover: {
                 color: "#15c6ea",

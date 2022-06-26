@@ -209,6 +209,7 @@ initYear = "1950";
           });
           productionChart.update({
             series: newVal,
+            subtitle: { text: "Year " + value },
           });
           cur_year = value;
         }

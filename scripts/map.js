@@ -55,6 +55,8 @@ initYear = "1950";
       };
     },
     function (data) {
+      console.log("AAAA");
+      console.log(data);
       var cur_year = "1961";
       initData = data.filter((x) => x.year === "1961");
       initData = initData.map(function (set, i) {

@@ -75,7 +75,7 @@ d3.csv(
 
       series: [
         {
-          name: "Number of fish",
+          name: "Metric tonnes of fish",
           data: Object.values(data[cur_year]),
           pointPlacement: "on",
           fillColor: "rgba(177, 193, 224, 0.7)",

@@ -1,3 +1,5 @@
+PUBLIC_URL = "https://konstantinastoikou.github.io/dataviz/";
+
 initYear = "1950";
 
 (async () => {
@@ -6,7 +8,7 @@ initYear = "1950";
   ).then((response) => response.json());
 
   d3.csv(
-    "https://raw.githubusercontent.com/KonstantinaStoikou/dataviz/main/data/seafood-and-fish-production-thousand-tonnes.csv",
+    PUBLIC_URL + "data/seafood-and-fish-production-thousand-tonnes.csv",
     function (d) {
       // process data
       return {

@@ -6,7 +6,7 @@ initYear = "1950";
   ).then((response) => response.json());
 
   d3.csv(
-    "https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-10-12/seafood-and-fish-production-thousand-tonnes.csv",
+    "https://raw.githubusercontent.com/KonstantinaStoikou/dataviz/main/data/seafood-and-fish-production-thousand-tonnes.csv",
     function (d) {
       // process data
       return {

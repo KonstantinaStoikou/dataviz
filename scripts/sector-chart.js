@@ -24,7 +24,7 @@ d3.csv(
       },
 
       title: {
-        text: "Amount of fish caught by sector (worldwide)",
+        text: "Amount of fish caught by sector ()",
       },
 
       subtitle: {

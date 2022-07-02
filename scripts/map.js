@@ -298,7 +298,7 @@ initYear = "1950";
         },
         yAxis: {
           title: {
-            text: "Metric tons of fish",
+            text: "Metric tonnes of fish",
           },
           labels: {
             formatter: function () {
@@ -307,7 +307,8 @@ initYear = "1950";
           },
         },
         tooltip: {
-          pointFormat: "{point.y:,.0f} metric tons of fish from {series.name}",
+          pointFormat:
+            "{point.y:,.0f} metric tonnes of fish from {series.name}",
         },
         plotOptions: {
           area: {
@@ -507,7 +508,7 @@ initYear = "1950";
                     areaChart.series[1].setData(fisheriesData);
                     areaChart.update({
                       title: {
-                        text: "Capture fisheries vs aquaculture worldwide",
+                        text: "Capture fisheries vs aquaculture (worldwide)",
                       },
                     });
                   }
